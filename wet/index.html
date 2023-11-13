@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+<body>
+    <div class="card">
+        <div class="search">
+            <input type="text" class="search-bar">
+            <button>icon</button>
+        </div>
+    </div>
+</body>
+</html>
+
+<div id="product" class="container p-relative _mVpYw-par" th:classappend="${1 < #lists.size(product_data.images)} ? 'multiple-product-images' : ''">
+    <div
+        class="p-absolute"
+        th:style="
+            'top: -99px; height: calc(100% + 99px);'+
+            'left: 50%; width: 50vw;'+
+            'background: ' + ( ${product_data.bazar} ? '#ffe437' : '#f6f6f6')+ ';'+
+        ''"
+    ></div>
+    <div class="p-relative row flex-pos-space-between _mVpYw">
+        <script>onScreenLayoutChange(_=>$('._mVpYw').toggleClass('row', !isDesktop))</script>
+        <!--/* ---------- Start Slider ---------- */-->
+        <!--/* ---------- MOBILE ----   js-desktop-stars   ------ */-->
+        <div class="info mobile-display-block _h2JEr">
+            <div class="_0lruA">
+                <div th:if="${product_data.promo}" th:unless="${product_data.bazar}" th:remove="tag">
+                    <div class="_0lruA-percent">		  
+                        <span th:text="|-${product_data.promo_proc}|">-10</span>
+                        <sup>%</sup>
+                    </div>
+                </div>
+                <div th:if="${product_data.bazar}" th:remove="tag">
+                    <div class="_0lruA-percent bazar">
+                        <span th:if="${product_data.promo_proc}" th:text="|-${product_data.promo_proc}|">-10</span>
+                        <span th:unless="${product_data.promo_proc}">0</span>
+                        <sup>%</sup>
+                    </div>
+                </div>
+            </div>
+            <div class="postition-right">
+                <meta data-place-mobile="._21ajJ">
+                <div class="_21ajJ p">
+                    <h1 th:text="${product_data.ime}"></h1>
+                    <p class="num p">Ном. номер: <span th:text="${product_data.num}" th:remove="tag"></span></p>
+
+                    <th:block th:if="${product_data.otzivi_ocenka}">
+                        <div class="rating p" th:title="|Оценено с ${r.otzivi_ocenka} от 5 звезди|">
+                            <th:block th:text="|(${product_data.otzivi_ocenka}.0)|"></th:block>
+
+                            <ul
+                                class="_9ZoRH _9ZoRH-product"
+                            >
+                                <th:block th:each="i : ${ { 1, 2, 3, 4, 5 } }">
+                                    <!--/*
+                                        if otzivi_ocenka is float:
+                                        ) (${i} + .5) <= ${r.otzivi_ocenka} ? 'fa-star-half-full' : (
+                                    */-->
+                                    <li> <i class="fa" th:classappend="
+                                        ${i} <= ${r.otzivi_ocenka} ? 'fa-star' : (
+                                        ${r.otzivi_ocenka} <  ${i} ? 'fa-star-o' : (
+                                        null ) )
+                                    "></i> </li>
+                                </th:block>
+                            </ul>
+                        </div>
+                    </th:block>
+
+                    <p class="item-category p" th:text="${product_data.ime2}"></p>
+                </div>
+            </div>
+        </div>
+
+<div class="col-sm--_cT5dY-size1">
+    <!--/* ----------  Big image  ---------- */-->
+    <div class="image-placeholder p-relative _vVCF5" id="big-product-image">
+        <ul
+            class="_5fDbO h-100 scroll-snap _jSTfH_ulSliderBig _Wf4lT_elevateZoomElem_ScrollPar no-scrollbar"
+            th:style="|--_5fDbO-images-count:${#lists.size(product_data.images)}|"
+        >
+
+            <li th:each="rr,rStat : ${product_data.images}" class="d-flex-center" th:data-imageID="${rr.image_path}">
+                <a class="_Wf4lT_fancybox" th:href="@{'/tools-box-1200-1200-' + ${rr.image_path} + '/' + ${rr.image_real_name}}" rel="gallery">
+                    <th:block
+                        th:with="
+                            itemID='big-image', itemClass='img-responsive elevateZoom__Wf4lT_imgs-big',
+
+                            itemName=${product_data.ime},
+                            imagePath=${rr.image_path},
+                            imageRealName=${rr.image_real_name},
+                            imageSizeX='1200', imageSizeY='1200',
+                            itemProp=@{'/tools-box-1200-1200-' + ${rr.image_path} + '/' + ${rr.image_real_name}},
+                        "
+                        th:include="/fragments/general/image_resize"
+                    ></th:block>
+                </a>
+            </li>
+        </ul>
+
+
+        <div class="_0lruA-promo p-absolute" th:if="${product_data.promo} AND !${product_data.bazar}">
+            <span>Промоция</span>
+        </div>
+
+        <button
+            th:id="|wishlist-${product_data.id}|"
+            th:class="'add-to-wishlist js-addToWishlist css-addToWishlist _I5XBn p-absolute' + (${product_data.inWishlist} ? ' added' : '')"
+
+            type="submit"
+            th:attr="
+                data-url-add=${product_data.url_wishlist_add},
+                data-url-remove=${product_data.url_wishlist_remove},
+                data-id=${product_data.id},
+            "
+        ></button>
+    </div>
+    <!--/* ----------  Small images  ---------- */-->
+    <!--/* _N4a9o = js for for small and big imgs */-->
+    <th:block th:if="${1 < #lists.size(product_data.images)}">
+        <div class="thumbnails-wrapper-container _Q6RIl" id="small-thumbnails-move">
+            <a href="javascript:;" class="thumbs-nav _jSTfH-move-prev"><i class="slider-arrow slider-arrow-left"></i></a>
+            <ul class="_jSTfH_ulSliderSmall" role="tablist" th:if="${#lists.size(product_data.images)}">
+                <li class="li-slides" th:each="rr,rStat : ${product_data.images}" th:data-imageID="${rr.image_path}">
+                    <a
+                        class="d-flex-center _Wf4lT_fancybox small-a _js__Wf4lT-a"
+                        th:href="@{'/tools-box-1200-1200-' + ${rr.image_path} + '/' + ${rr.image_real_name}}" onclick="return!1"
+                        rel="gallery"
+                    >
+                        <th:block
+                            th:with="
+                                itemClass='elevateZoom__Wf4lT_imgs-small',
+                                itemName=${product_data.ime},
+                                imagePath=${rr.image_path},
+                                imageRealName=${rr.image_real_name},
+                                itemProp='image',
+                                imageSizeX=130,
+                                imageSizeY=130,
+                            "
+                            th:include="/fragments/general/image_resize"
+                        ></th:block>
+                    </a>
+                </li>
+            </ul>
+            <script>
+            if (typeof window.chrome !== 'undefined')
+            void function(ul) { // workiround: hide chrome image while loading, chrome image cache does not position correctly when have `object-fit:contain`
+                [].forEach.call(ul.children, li => {
+                    var img = li.querySelector('img');
+                    img.style.opacity = 0;
+                    img.addEventListener('load', e => img.style.opacity = '' );
+                });
+            }(document.currentScript.previousElementSibling);
+            </script>
+            <a href="javascript:;" class="thumbs-nav _jSTfH-move-next"><i class="slider-arrow slider-arrow-right"></i></a>
+        </div>
+
+        <div id="small-thumbnails-dots" class="_jSTfH_ulSliderDots d-flex-center small-thumbnails-dots desktop-hide!!">
+            <ul>
+                <li th:each="rr : ${product_data.images}" th:data-imageID="${rr.image_path}"></li>
+            </ul>
+        </div>
+
+    </th:block>							
+    <!-- Start Complects DESKTOP VIEW ON LEFT SIDE-->
+    <div class="right-side under-product desktop-display-block" th:if="${product_data.komplekt}">
+        <div class="row">
+            <div class="h4">Комплектът включва</div>
+            <div class="col-xs-9 col-sm-10 owl-carousel-complects owl-theme" style="accent-color:#dd2229">
+                <div th:each="r : ${product_data.komplekti}" class="complect-wrapper" th:classappend="|item-no-modal-${r.id}|">
+                    <span class="complectContainer">
+                        <input type="hidden" name="productComplectID" class="complect-id" th:value="${r.id}">
+                        <input type="hidden" name="kolichestvoComplect" class="complect-kolichestvo" th:value="${r.komplekt_kol}">
+                        <input type="checkbox" name="checkboxComplect" class="complect-checkbox" checked>
+                    </span>
+                    <a th:href="${r.url}">
+                        <div class="complect-url">
+                            <block th:with="itemName=${r.ime}, imagePath=${r.image_path}, imageRealName=${r.image_real_name}, imageSizeX='300', imageSizeY='100', itemClass='img-responsive', itemID='complect-image', itemProp=@{'/tools-box-300-100-' + ${r.image_path} + '/' + ${r.image_real_name}}" th:include="/fragments/general/image_resize" th:remove="tag" />
+                        </div>
+                    </a>
+                </div>
+                <!-- Start Complect With Modal -->
+                
+                <!-- End Complect With Modal -->
+            </div>	
+            <div class="col-xs-3 col-sm-2 button-div">
+                <button class="btn btn-silver custom-complect-button text-center" data-toggle="modal" data-target="#ComplectiModal" type="button">
+                    Виж<br />тук
+                </button>
+            </div>
+        </div>
+        <!-- End Complects -->
+        <!-- Start Element Complects -->
+        <div class="col-xs-12 col-md-6 right-side" th:if="!${product_data.komplekt} AND ${product_data.komplektElement}">							
+            <div class="row">
+                <div class="h4">Модул в комплектите</div>
+                <div class="col-xs-9 col-sm-10 owl-carousel-complects owl-theme">								  
+                    <div th:each="r : ${product_data.komplekti}" class="complect-wrapper">
+                        <a th:href="${r.url}">
+                            <div class="complect-url">
+                                <block th:with="itemName=${r.ime}, imagePath=${r.image_path}, imageRealName=${r.image_real_name}, imageSizeX='300', imageSizeY='100', itemClass='img-responsive', itemID='complect-image', itemProp=@{'/tools-box-300-100-' + ${r.image_path} + '/' + ${r.image_real_name}}" th:include="/fragments/general/image_resize" th:remove="tag" />
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Element Complects -->
+    
+    <!--/*				START DELIVERY BTNs   */-->					
+    <meta data-place-desktop="._NMEBp-par">
+    
+    <div class="row under-product _NMEBp-par isthis">
+        <div class="col-xs-12 col-md-12">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 _NMEBp">
+                    <span hidden th:text="${product_data.cenapromosdds}"></span>
+
+                    <p class="availability in-stock"         th:if="!${product_data.etiketNal}">В наличност <i class="fa fa-check"></i></p>
+                    <p class="availability out-of-stock-new" th:if=" ${product_data.etiketNal}">С поръчка <i class="fa fa-times"></i></p>
+                    <a href="#" data-toggle="modal" data-target="#itemInStock" class="product-location"><i></i> <span>виж</span></a>
+                    <p class="delivery no-wrap" th:if="${product_data.dni_dostavka_show} AND ${product_data.dni_dostavka}">
+                        <span class="text-mondo-red">ДОСТАВКА: </span>
+                        <span class="days" th:text="|${product_data.dni_dostavka} дни|">30</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <!--/*				END DELIVERY BTNs  */-->
+
+</div>
